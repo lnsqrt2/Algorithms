@@ -7,7 +7,7 @@
 using namespace std;
 string ss(10000, '0');
 
-string add(string s1, string s2)//加法
+string add(string s1, string s2)
 {
 	string s(10000, '0');
 	reverse(s1.begin(),s1.end());  
@@ -110,9 +110,9 @@ int main(void)
     cin>>s1>>s2;
 	if (s1[0] != '-'&&s2[0] != '-')
 	{
-		cout << "加法结果 " << (add(s1, s2)).substr((add(s1, s2)).find_first_not_of('0')) << endl;
-		cout << "减法结果 " << (sub(s1, s2)).substr((sub(s1, s2)).find_first_not_of('0')) << endl;
-		cout << "乘法结果 " << (mul(s1, s2)).substr((mul(s1, s2)).find_first_not_of('0')) << endl;
+		cout << "Addition result: " << (add(s1, s2)).substr((add(s1, s2)).find_first_not_of('0')) << endl;
+		cout << "Subtraction results: " << (sub(s1, s2)).substr((sub(s1, s2)).find_first_not_of('0')) << endl;
+		cout << "Multiplication result: " << (mul(s1, s2)).substr((mul(s1, s2)).find_first_not_of('0')) << endl;
 	}
 	if (s1[0] == '-'&&s2[0] != '-')
 	{

@@ -164,8 +164,8 @@ string mul(string s1, string s2)//s1*s2
 	if (s1.find_first_not_of('0') == string::npos || s2.find_first_not_of('0') == string::npos)//if s1 or s2 = 0
 	{
 		int len = s1.length() + s2.length();
-		result.resize(len, '0');
-		result.assign(len, '0');
+		result.resize(1, '0');
+		result.assign(1, '0');
 		return result;
 	}
 	if(s1.length()==1||s2.length()==1)//the end of recursion
@@ -185,17 +185,17 @@ string mul(string s1, string s2)//s1*s2
         string BD = mul(B, D);
 
         string RAC=AC;
-        for(int i=0;i<(s1.length()/2+s2.length()/2);i++)
+        for(int i=0;i<(s1.length()-s1.length()/2+s2.length()-s2.length()/2);i++)
         {
         	RAC += "0";
         }
         string RAD=AD;
-        for(int i=0;i<(s1.length()/2);i++)
+        for(int i=0;i<(s1.length() - s1.length()/2);i++)
         {
         	RAD += "0";
         }
         string RBC=BC;
-        for(int i=0;i<(s2.length()/2);i++)
+        for(int i=0;i<(s2.length() - s2.length()/2);i++)
         {
         	RBC += "0";
         }
@@ -206,10 +206,9 @@ string mul(string s1, string s2)//s1*s2
 		return result;
 }
 
-
 int main(void)
 {
-    string s1,s2,s3;
+    string s1,s2,result;
     cout << "Please input the first integer: " ;
     cin>>s1;
     cout << "Please input the second integer: " ;
@@ -217,79 +216,63 @@ int main(void)
 
 	if (s1[0] != '-'&&s2[0] != '-')//both are positive integers
 	{
-		add(s1, s2);
-		cout << "Addition result: " << s.substr(s.find_first_not_of('0')) << endl;
-		sub(s1, s2);
-		if(s.size()==1)
-			cout << "Subtraction results: " << "0" << endl;
-		else
-			cout << "Subtraction results: " << s.substr(s.find_first_not_of('0')) << endl;
-
-		s3 = mul(s1, s2);
-		if(s.size()==1)
-			cout << "Multiplication results: " << "0" << endl;
-		else
-			cout << "Multiplication results: " << s3.substr(s3.find_first_not_of('0')) << endl;
+		result = add(s1, s2);
+		cout << "Addition result: " << result << endl;
+		result = sub(s1, s2);
+		cout << "Subtraction results: " << result << endl;
+		result = mul(s1, s2);
+		cout << "Multiplication results: " << result << endl;
 	}
 	if (s1[0] == '-'&&s2[0] != '-')//s1 is negative
 	{
 		s1.erase(0, 1);
-		sub(s2, s1);
-		if (s.size() == 1)
-			cout << "Addition results: " << "0" << endl;
-		else
-			cout << "Addition results: " << s.substr(s.find_first_not_of('0')) << endl;
-		add(s1, s2);
-		s.insert(s.find_first_not_of('0'), "-");
-		cout << "Subtraction results: " << s.substr(s.find_first_not_of('0')) << endl;
+		result = sub(s2, s1);
+		cout << "Addition results: " << result << endl;
 
-		mul(s1, s2);
-		if(s.size()==1)
+		result = add(s1, s2);
+		result.insert(result.find_first_not_of('0'), "-");
+		cout << "Subtraction results: " << result << endl;
+
+		result = mul(s1, s2);
+		if(result.find_first_not_of('0') == string::npos)
 			cout << "Multiplication results: " << "0" << endl;
 		else
 		{
-			s.insert(s.find_first_not_of('0'), "-");
-			cout << "Multiplication results: " << s.substr(s.find_first_not_of('0')) << endl;
+			result.insert(result.find_first_not_of('0'), "-");
+			cout << "Multiplication results: " << result << endl;
 		}
 	}
 	if (s1[0] != '-'&&s2[0] == '-')//s2 is negative
 	{
 		s2.erase(0, 1);
-		sub(s1, s2);
-		if (s.size() == 1)
-			cout << "Addition results: " << "0" << endl;
-		else
-			cout << "Addition results: " << s.substr(s.find_first_not_of('0')) << endl;
-		add(s1, s2);
-		cout << "Subtraction results: " << s.substr(s.find_first_not_of('0')) << endl;
+		result = sub(s1, s2);
+		cout << "Addition results: " << result << endl;
 
-		mul(s1, s2);
-		if(s.size()==1)
+		result = add(s1, s2);
+		cout << "Subtraction results: " << result << endl;
+
+		result = mul(s1, s2);
+		if (result.find_first_not_of('0') == string::npos)
 			cout << "Multiplication results: " << "0" << endl;
 		else
 		{
-			s.insert(s.find_first_not_of('0'), "-");
-			cout << "Multiplication results: " << s.substr(s.find_first_not_of('0')) << endl;
+			result.insert(result.find_first_not_of('0'), "-");
+			cout << "Multiplication results: " << result << endl;
 		}
 	}
 	if (s1[0] == '-'&&s2[0] == '-')//both are negative integers
 	{
 		s1.erase(0, 1);
 		s2.erase(0, 1);
-		add(s1, s2);
-		s.insert(s.find_first_not_of('0'), "-");
-		cout << "Addition results: " << s.substr(s.find_first_not_of('0')) << endl;
-		sub(s2, s1);
-		if (s.size() == 1)
-			cout << "Subtraction results: " << "0" << endl;
-		else
-			cout << "Subtraction results: " << s.substr(s.find_first_not_of('0')) << endl;
+		result = add(s1, s2);
+		result.insert(result.find_first_not_of('0'), "-");
+		cout << "Addition results: " << result << endl;
 
-		mul(s1, s2);
-		if(s.size()==1)
-			cout << "Multiplication results: " << "0" << endl;
-		else
-			cout << "Multiplication results: " << s.substr(s.find_first_not_of('0')) << endl;
+		result = sub(s2, s1);
+		cout << "Subtraction results: " << result << endl;
+
+		result = mul(s1, s2);
+		cout << "Multiplication results: " << result << endl;
 	}
     return 0; 
 }

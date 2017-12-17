@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-#include <sstream>
 #include <algorithm>
 #define MAX 10000
 
@@ -35,8 +34,9 @@ void exchange(string &s1, string &s2)//s1 is larger than s2
  	return;
 }
 
-void add(string s1, string s2)//s1+s2
+string add(string s1, string s2)//s1+s2 99+1
 {
+	string result;
 	int carry = 0;
 	s.resize(MAX,'0');//resize
 	s.assign(MAX,'0');//assign s
@@ -62,15 +62,29 @@ void add(string s1, string s2)//s1+s2
 		else
 			s[i]=s1[i];
 	}
-	s[s2.length()]=s[s2.length()]+carry;
+	if (s[s2.length()] == '9')
+	{
+		for (int j = s2.length(); j <=s1.length(); j++)
+		{
+			if (s[j] >= '9')
+			{
+				s[j] = '0';
+				s[j + 1] = s[j + 1] + carry;
+			}
+		}
+	}
+	else
+		s[s2.length()]=s[s2.length()]+carry;
 	reverse(s.begin(),s.end());
-	return; 
+	result = s.substr(s.find_first_not_of('0'));
+	return result;
 }
 
-void sub(string s1, string s2)//s1-s2
+string sub(string s1, string s2)//s1-s2
 {
 	int i,j;
 	int carry = 0;
+	string result;
 	s.resize(MAX,'0');//resize s
 	s.assign(MAX,'0');//assign s
 	exchange(s1, s2);//confirm s1 is larger
@@ -78,7 +92,7 @@ void sub(string s1, string s2)//s1-s2
 	{
 		s.resize(1,'0');//resize s
 		s.assign(1,'0');//assign s
-		return;
+		return s;
 	}
 	else
 	{
@@ -92,14 +106,17 @@ void sub(string s1, string s2)//s1-s2
 					s[i] = s[i] - s2[i] + '0';
 				else
 				{
-					for (j = i+1; j < s1.length()-1; j++)
-					{
-						if (s[j] <= '0')
+					if(s[i+1]=='0')
+						for (j = i+1; j < s1.length()-1; j++)
 						{
-							s[j] = '9';
-							s[j + 1] = s[j + 1] - 1;//brorrow
+							if (s[j] <= '0')
+							{
+								s[j] = '9';
+								s[j + 1] = s[j + 1] - 1;//brorrow
+							}
 						}
-					}
+					else
+						s[i + 1] = s[i + 1] - 1;//brorrow
 	 				s[i] = s[i] + 10 - s2[i]  + '0';
 				}
 		}
@@ -107,60 +124,13 @@ void sub(string s1, string s2)//s1-s2
 		if(flag==true)//have exchanged
 			s.insert(s.find_first_not_of('0'), "-");
 	}
-	return;
+	result = s.substr(s.find_first_not_of('0'));
+	return result;
 }
 
-// string mul(string s1, string s2)//s1*s2
-// {
-// 	String result = "";
-//         if (a.length() == 1 || b.length() == 1)// 递归结束的条件
-//             result = "" + Long.valueOf(a) * Long.valueOf(b);
-//         else// 如果2个字符串的长度都 >= 2
-//         {
-//             //1.分割成  a1  a0  b1  b0
-//             int lengthA0 = a.length() / 2;
-//             int lengthA1=a.length()-lengthA0;
-//             String a1 = a.substring(0, lengthA1); // 截取前一半的字符串(较短的一半)
-//             String a0 = a.substring(lengthA1, a.length()); // 截取后一半的字符串
-
-//             int lengthB0 = b.length() / 2;
-//             int lengthB1=b.length()-lengthB0;
-//             String b1 = b.substring(0, lengthB1);
-//             String b0 = b.substring(lengthB1, b.length());
-//             // * a*b=
-//             // * (a1*b1)* 10^[(n1+n2)/2 ]
-//             // * +(a1*b0)*10^(n1/2)
-//             // * +(a0*b1)*10^(n2/2)
-//             // * +(a0*b0)
-//             //2.计算展开式中的乘法
-//             String a1b1 = Mutiply1(a1, b1);
-//             String a1b0 = Mutiply1(a1, b0);
-//             String a0b1 = Mutiply1(a0, b1);
-//             String a0b0 = Mutiply1(a0, b0);
-
-//             //3.模拟移位
-//             String resulta1b1 = a1b1;
-//             for (int i = 0; i < lengthA0+lengthB0; i++) {
-//                 resulta1b1 += "0";
-//             }
-//             String resulta1b0 = a1b0;
-//             for (int i = 0; i <lengthA0; i++) {
-//                 resulta1b0 += "0";
-//             }
-//             String resulta0b1 = a0b1;
-//             for (int i = 0; i < lengthB0; i++) {
-//                 resulta0b1 += "0";
-//             }   
-//             //4.大数相加
-//             result = MyBigAdd.add(resulta1b1, resulta1b0);
-//             result = MyBigAdd.add(result, resulta0b1);
-//             result = MyBigAdd.add(result, a0b0);
-//         }
-//         return result;
-// }
-
-string mul(string s1, string s2)//s1*s2
+string caculate(string s1, string s2)//s1*s2
 {
+	string result;
 	s.resize(MAX, '0');//resize
 	s.assign(MAX, '0');//assign s
 	reverse(s1.begin(), s1.end());
@@ -180,57 +150,66 @@ string mul(string s1, string s2)//s1*s2
 		return s;
 	}
 	else
-		return s;
+	{
+		result = s.substr(s.find_first_not_of('0'));
+		return result;
+	}
 }
 
+string mul(string s1, string s2)//s1*s2
+{
+	string result;
+	exchange(s1, s2);//confirm s1 is longer
+	int len = s1.length();
+	if (s1.find_first_not_of('0') == string::npos || s2.find_first_not_of('0') == string::npos)//if s1 or s2 = 0
+	{
+		int len = s1.length() + s2.length();
+		result.resize(len, '0');
+		result.assign(len, '0');
+		return result;
+	}
+	if(s1.length()==1||s2.length()==1)//the end of recursion
+	{
+		result = caculate(s1, s2);
+		return result;
+	}
+	else
+	{
+		string A = s1.substr(0, s1.length() /2);
+        string B = s1.substr(s1.length() /2);
+        string C = s2.substr(0, s2.length() /2);
+        string D = s2.substr(s2.length() /2);
+        string AC = mul(A, C);
+        string AD = mul(A, D);
+        string BC = mul(B, C);
+        string BD = mul(B, D);
 
-
-
-// string mul(string s1, string s2)//s1*s2
-// {
-// 	string result = "";
-// 	// string ss(MAX, '0');
-// 	 exchange(s1, s2);//confirm s1 is longer
-// 	// int len = s1.length();
-// 	// s1 = formatNumber(s1, len);
-//  //    s2 = formatNumber(s2, len);
-
-// 	if(s2.length()==1)//the end of recursion
-// 	{
-// 		reverse(s1.begin(), s1.end());
-// 		reverse(s2.begin(), s2.end());
-// 		for (int i = 0; i<s1.length(); i++)
-// 			int temp = (s1[i] - '0')*(s2[0] - '0');
-// 			s[i + 1] = s[i + 1] - '0' + (s[i] - '0' + temp) / 10 + '0';
-// 			s[i ] = (s[i] - '0' + temp) % 10 + '0';
-// 		reverse(s.begin(), s.end());
-// 		return s;
-// 	}
-// 	else
-// 	{
-// 	// 	int len1 = len/2;
-// 	// 	int len2 = len - len1;
-// 	// 	int lenm = len1>len2?len1:len2;
-// 	// 	String A = s1.substring(0, len1);
-//  //        String B = s1.substring(len1);
-//  //        String C = s2.substring(0, len1);
-//  //        String D = s2.substring(len1);
-//  //        String AC = mul(A, C);
-//  //        String AD = mul(A, D);
-//  //        String BC = mul(B, C);
-//  //        String BD = mul(B, D);
-// 	}
-// 	// if (s.find_first_not_of('0') == string::npos)//until over
-//  // 		return;
-//  // 	else
-// 	// 	return;
-// 	//return result;
-// }
+        string RAC=AC;
+        for(int i=0;i<(s1.length()/2+s2.length()/2);i++)
+        {
+        	RAC += "0";
+        }
+        string RAD=AD;
+        for(int i=0;i<(s1.length()/2);i++)
+        {
+        	RAD += "0";
+        }
+        string RBC=BC;
+        for(int i=0;i<(s2.length()/2);i++)
+        {
+        	RBC += "0";
+        }
+        result = add(RAC,RAD);
+        result = add(result,RBC);
+        result = add(result,BD);
+	}
+		return result;
+}
 
 
 int main(void)
 {
-    string s1,s2;
+    string s1,s2,s3;
     cout << "Please input the first integer: " ;
     cin>>s1;
     cout << "Please input the second integer: " ;
@@ -246,11 +225,11 @@ int main(void)
 		else
 			cout << "Subtraction results: " << s.substr(s.find_first_not_of('0')) << endl;
 
-		mul(s1, s2);
+		s3 = mul(s1, s2);
 		if(s.size()==1)
 			cout << "Multiplication results: " << "0" << endl;
 		else
-			cout << "Multiplication results: " << s.substr(s.find_first_not_of('0')) << endl;
+			cout << "Multiplication results: " << s3.substr(s3.find_first_not_of('0')) << endl;
 	}
 	if (s1[0] == '-'&&s2[0] != '-')//s1 is negative
 	{

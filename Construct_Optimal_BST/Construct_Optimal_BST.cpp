@@ -15,19 +15,19 @@ void CONSTRUCT_OPTIMAL_BST(int i, int j)
 {
 	int s = root[i][j];
 	if(i==1&&j==MAX-1)
-		cout << "k" << root[i][j] << "为根" << endl;
+		cout << "k" << root[i][j] << " is root" << endl;
 	if(i>s-1)
-		cout << "d" << root[i][j] - 1 << "为k" << root[i][j] << "的左孩子" << endl;
+		cout << "d" << root[i][j] - 1 << " is k" << root[i][j] << "'s left child" << endl;
 	else
 	{
-		cout << "k" << root[i][s-1] << "为k" << root[i][j] << "的左孩子" << endl;
+		cout << "k" << root[i][s-1] << " is k" << root[i][j] << "'s left child" << endl;
 		CONSTRUCT_OPTIMAL_BST(i, root[i][j] - 1);
 	}
 	if(j<s+1)
-		cout << "d" << root[i][j] << "为k" << root[i][j] << "的右孩子" << endl;
+		cout << "d" << root[i][j] << " is k" << root[i][j] << "'s right child" << endl;
 	else
 	{
-		cout << "k" << root[s+1][j] << "为k" << root[i][j] << "的右孩子" << endl;
+		cout << "k" << root[s+1][j] << " is k" << root[i][j] << "'s right child" << endl;
 		CONSTRUCT_OPTIMAL_BST(root[i][j]+1, j);
 	}
 }  

@@ -3,7 +3,7 @@
 using namespace std;
 #define MAX 1000
 int A[MAX][MAX];//save the length
-int D[MAX][MAX];//save the points the path through 
+int D[MAX][MAX];//save the points the path through
 
 int main(void)
 {

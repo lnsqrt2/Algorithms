@@ -169,7 +169,7 @@ double solve(int low,int high)//core
 		sort(temp,temp+k,cmpy);
 		for(i=0;i<k;i++)
 		{
-			for(int j = i+1; j < k && temp[j].y-temp[i].y<d; j++)
+			for(int j = i+1; j < k && temp[j].y-temp[i].y<=d; j++)
 	        {
 	            d3 = MyDistance(temp[i],temp[j]);
 	            if(d3<=d)

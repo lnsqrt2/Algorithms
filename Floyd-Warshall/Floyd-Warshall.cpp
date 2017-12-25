@@ -45,24 +45,24 @@ int main(void)
 				}
 			}
 
-	// for(i=0;i<point_num;i++)//print A[][]
-	// {
-	// 	for(j=0;j<point_num;j++)
-	// 	{
-	// 		cout <<A[i][j]<<"\t";
-	// 	}
-	// 	printf("\n");
-	// }
-	// printf("\n\n");
-	// for(i=0;i<point_num;i++)//print D[][]
-	// {
-	// 	for(j=0;j<point_num;j++)
-	// 	{
-	// 		cout <<D[i][j]<<"\t";
-	// 	}
-	// 	printf("\n");
-	// }
-	// printf("\n\n");
+	for(i=0;i<point_num;i++)//print A[][]
+	{
+		for(j=0;j<point_num;j++)
+		{
+			cout <<A[i][j]<<"\t";
+		}
+		printf("\n");
+	}
+	printf("\n\n");
+	for(i=0;i<point_num;i++)//print D[][]
+	{
+		for(j=0;j<point_num;j++)
+		{
+			cout <<D[i][j]<<"\t";
+		}
+		printf("\n");
+	}
+	printf("\n\n");
 
 	for(i=0;i<point_num;i++)
 	{

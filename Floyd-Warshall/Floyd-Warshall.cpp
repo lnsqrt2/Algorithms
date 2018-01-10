@@ -49,7 +49,7 @@ int main(void)
 	{
 		for(j=0;j<point_num;j++)
 		{
-			cout <<A[i][j]<<"\t";
+		 	cout <<A[i][j]<<"\t";
 		}
 		printf("\n");
 	}

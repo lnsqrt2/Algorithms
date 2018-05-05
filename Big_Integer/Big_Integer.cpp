@@ -83,7 +83,7 @@ string add(string s1, string s2)//s1+s2 99+1
 string sub(string s1, string s2)//s1-s2
 {
 	int i,j;
-	int carry = 0;
+	//int carry = 0;
 	string result;
 	s.resize(MAX,'0');//resize s
 	s.assign(MAX,'0');//assign s
@@ -160,10 +160,10 @@ string mul(string s1, string s2)//s1*s2
 {
 	string result;
 	exchange(s1, s2);//confirm s1 is longer
-	int len = s1.length();
+	//int len = s1.length();
 	if (s1.find_first_not_of('0') == string::npos || s2.find_first_not_of('0') == string::npos)//if s1 or s2 = 0
 	{
-		int len = s1.length() + s2.length();
+		//int len = s1.length() + s2.length();
 		result.resize(1, '0');
 		result.assign(1, '0');
 		return result;
@@ -274,5 +274,6 @@ int main(void)
 		result = mul(s1, s2);
 		cout << "Multiplication results: " << result << endl;
 	}
-    return 0; 
+	system("pause");
+	return 0; 
 }
